@@ -11,6 +11,7 @@
 - **可定制化提示词**：通过独立的 prompt 文件灵活调整生成策略
 
 ## 📁 项目结构
+```
 AutoTutorial/
 ├── main.py # 项目入口文件
 ├── config.yaml.example # 配置文件模板
@@ -40,6 +41,7 @@ AutoTutorial/
 ├── llm_client.py # LLM API 调用封装
 ├── pipeline.py # 核心流水线逻辑
 └── utils.py # 工具函数
+```
 
 ## 🚀 快速开始
 
@@ -50,31 +52,40 @@ AutoTutorial/
 - 稳定的网络连接（用于调用 LLM API）
 
 **克隆仓库**：
-
+```
 git clone https://github.com/Ahri-qwq/AutoTutorial.git
 cd AutoTutorial
-
+```
 
 ### 2. 安装依赖
 
 创建虚拟环境并安装依赖包：
 
 创建虚拟环境
+```
 python -m venv venv
+```
 
 激活虚拟环境
+```
 Windows PowerShell:
 .\venv\Scripts\Activate.ps1
+```
 
 Windows CMD:
+```
 .\venv\Scripts\activate.bat
+```
 
 macOS/Linux:
+```
 source venv/bin/activate
+```
 
 安装依赖
+```
 pip install -r requirements.txt
-
+```
 
 ### 3. 配置 API 密钥
 
