@@ -93,47 +93,53 @@ pip install -r requirements.txt
 
 
 Windows PowerShell
+```
 Copy-Item config.yaml.example config.yaml
+```
 
 macOS/Linux
+```
 cp config.yaml.example config.yaml
-
+```
 
 编辑 `config.yaml`，填入您的 OpenAI API Key：
-
+```
 api_key: "sk-your-api-key-here"
 model: "gpt-4"
 temperature: 0.7
 max_tokens: 2000
-
+```
 
 ### 4. 准备数据
 
 将agent生成的问题集文件放入 `data/raw/` 目录：
-
+```
 data/raw/
     ├── outputs_problem_0...
     |    ├── problem_0_xxxx.json
     |    └── problem_0_output.txt
     ├── outputs_problem_1...
     └── outputs_problem_2...
-
+```
 
 ### 5. 运行程序
 
 执行完整的生成流程：
-
+```
 python main.py
-
+```
 
 **命令行参数**：
 
 跳过数据加载步骤（使用已缓存的数据）
+```
 python main.py --skip_loader
+```
 
 指定自定义数据目录
+```
 python main.py --raw_dir "C:\MyData"
-
+```
 
 ### 6. 查看结果
 
@@ -157,7 +163,7 @@ python main.py --raw_dir "C:\MyData"
 
 ### 更换 LLM 模型
 
-在 `config.yaml` 中修改 `model` 字段：
+在 `config.yaml` 中修改 `model` 字段.
 
 
 ## 📊 流程说明
