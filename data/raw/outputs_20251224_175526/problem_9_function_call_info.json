@@ -1,0 +1,1004 @@
+{
+    "call_00_wy0HQU347kMRrU0NYuzTE7xl": {
+        "name": "generate_bulk_structure",
+        "args": {
+            "element": "BN",
+            "crystal_structure": "hcp",
+            "a": 2.5,
+            "c": 6.66,
+            "orthorhombic": true,
+            "file_format": "cif"
+        },
+        "result": {
+            "message": "Generating bulk structure failed: Please specify 1 atom for hcp and not 2"
+        },
+        "is_error": false
+    },
+    "call_00_lNDAmLMUDAkS7E5OoU5P4LdF": {
+        "name": "generate_bulk_structure_from_wyckoff_position",
+        "args": {
+            "a": 2.5,
+            "b": 2.5,
+            "c": 6.66,
+            "alpha": 90,
+            "beta": 90,
+            "gamma": 120,
+            "spacegroup": 186,
+            "wyckoff_positions": [
+                [
+                    "B",
+                    [
+                        0.3333,
+                        0.6667,
+                        0.25
+                    ],
+                    "c"
+                ],
+                [
+                    "N",
+                    [
+                        0.6667,
+                        0.3333,
+                        0.25
+                    ],
+                    "c"
+                ]
+            ],
+            "crystal_name": "hBN",
+            "format": "cif"
+        },
+        "result": {
+            "structure_file": "local:///tmp/abacusagent/20251224161948/2025-12-24-17:49:36.301952/b3f15c94-b391-4d22-a46a-6ef7c33e3837/outputs/structure_file/hBN.cif"
+        },
+        "is_error": false
+    },
+    "call_00_vZhXp31H6ODlPMzoHgIJ9TZ7": {
+        "name": "abacus_prepare",
+        "args": {
+            "stru_file": "local:///tmp/abacusagent/20251224161948/2025-12-24-17:49:36.301952/b3f15c94-b391-4d22-a46a-6ef7c33e3837/outputs/structure_file/hBN.cif",
+            "stru_type": "cif",
+            "job_type": "cell-relax",
+            "lcao": true,
+            "nspin": 1
+        },
+        "result": {
+            "abacus_inputs_dir": "local:///tmp/abacusagent/20251224161948/2025-12-24-17:49:45.426048/fe18eefa-5b8e-43e1-b693-75e73b0a84b8/outputs/abacus_inputs_dir/000000.tgz",
+            "input_content": {
+                "calculation": "cell-relax",
+                "symmetry": 1,
+                "ecutwfc": 100,
+                "scf_thr": 1e-07,
+                "scf_nmax": 100,
+                "smearing_method": "gauss",
+                "smearing_sigma": 0.015,
+                "mixing_type": "broyden",
+                "mixing_beta": 0.8,
+                "basis_type": "lcao",
+                "ks_solver": "genelpa",
+                "precision": "double",
+                "cal_force": 1,
+                "cal_stress": 1,
+                "kspacing": 0.14,
+                "relax_method": "cg",
+                "relax_nmax": 60,
+                "force_thr_ev": 0.01,
+                "stress_thr": 0.5,
+                "fixed_axes": "None"
+            }
+        },
+        "is_error": false
+    },
+    "call_00_j5Kuy8dJzYbWzLHIowqE150u": {
+        "name": "abacus_do_relax",
+        "args": {
+            "abacus_inputs_dir": "local:///tmp/abacusagent/20251224161948/2025-12-24-17:49:45.426048/fe18eefa-5b8e-43e1-b693-75e73b0a84b8/outputs/abacus_inputs_dir/000000.tgz",
+            "relax_cell": true,
+            "force_thr_ev": 0.01,
+            "stress_thr_kbar": 0.5,
+            "max_steps": 60
+        },
+        "result": {
+            "job_path": "local:///tmp/abacusagent/20251224161948/2025-12-24-17:49:54.669407/1f78804f-7d31-4964-a399-796a1ca60272/outputs/job_path/20251224174954.abacus_do_relax.3ca0ac26.tgz",
+            "new_abacus_inputs_dir": "local:///tmp/abacusagent/20251224161948/2025-12-24-17:49:54.669407/1f78804f-7d31-4964-a399-796a1ca60272/outputs/new_abacus_inputs_dir/20251224175317.abacus_prepare_inputs_from_relax_results.a4934661.tgz",
+            "normal_end": true,
+            "relax_steps": 60,
+            "largest_gradient": [
+                0.012437,
+                0.037282,
+                0.006273,
+                0.006273,
+                0.014926,
+                0.078335,
+                0.390122,
+                0.031319,
+                0.026564,
+                0.066674,
+                0.235194,
+                0.020348,
+                0.026035,
+                0.028209,
+                0.026795,
+                0.022553,
+                0.003116,
+                0.014498,
+                0.006181,
+                0.018802,
+                0.008581,
+                0.021108,
+                0.017806,
+                0.007908,
+                0.000361,
+                0.015239,
+                0.012391,
+                0.00385,
+                0.000943,
+                0.004651,
+                0.00194,
+                0.006186,
+                0.006966,
+                0.008508,
+                0.001627,
+                0.029344,
+                0.051396,
+                0.008437,
+                0.001832,
+                0.003335,
+                0.002077,
+                0.006931,
+                0.003835,
+                0.011487,
+                0.004599,
+                0.017527,
+                0.016912,
+                0.015964,
+                0.006194,
+                0.005994,
+                0.002968,
+                0.004767,
+                0.003286,
+                0.004086,
+                0.001371,
+                0.008417,
+                0.006135,
+                0.001862,
+                0.002115,
+                0.004878
+            ],
+            "largest_gradient_stress": [
+                55.429234,
+                106.086,
+                13.541207,
+                13.541205,
+                12.35757,
+                9.129633,
+                13.341931,
+                8.882496,
+                8.007278,
+                9.415229,
+                23.130825,
+                5.494014,
+                5.617896,
+                5.940266,
+                5.777861,
+                5.290944,
+                4.442391,
+                4.418689,
+                4.349483,
+                4.144248,
+                4.05257,
+                4.010744,
+                3.935315,
+                3.711678,
+                3.638905,
+                3.506483,
+                3.433272,
+                3.980184,
+                3.161354,
+                3.070485,
+                2.981199,
+                3.056869,
+                2.658408,
+                2.650788,
+                2.558145,
+                2.287092,
+                2.676534,
+                2.248633,
+                2.158897,
+                2.325195,
+                2.040612,
+                1.859845,
+                1.8146,
+                1.735162,
+                1.666079,
+                1.566952,
+                1.521648,
+                1.387148,
+                1.383589,
+                1.379464,
+                1.365502,
+                1.329907,
+                1.307889,
+                1.242214,
+                1.219523,
+                1.152168,
+                1.128233,
+                1.204734,
+                1.045857,
+                1.029253
+            ],
+            "relax_converge": false,
+            "energies": [
+                -706.31980453,
+                -706.30146924459,
+                -706.32650556501,
+                -706.32650556502,
+                -706.32752962228,
+                -706.32993180243,
+                -706.32694360294,
+                -706.33025570142,
+                -706.33086746427,
+                -706.33208549725,
+                -706.33028730572,
+                -706.33242051649,
+                -706.33257016146,
+                -706.33257043109,
+                -706.33265628113,
+                -706.33289690024,
+                -706.33296525251,
+                -706.33298286592,
+                -706.33302042917,
+                -706.33310304785,
+                -706.33316327146,
+                -706.3331705228,
+                -706.33320718657,
+                -706.33330287021,
+                -706.33335251147,
+                -706.33338796488,
+                -706.33341813975,
+                -706.33349823305,
+                -706.33354616536,
+                -706.3335768772,
+                -706.33361013105,
+                -706.33369722809,
+                -706.33373547286,
+                -706.33373589699,
+                -706.33376824621,
+                -706.33382474185,
+                -706.33381173888,
+                -706.33386671282,
+                -706.33389541143,
+                -706.33390040573,
+                -706.33391911447,
+                -706.33396546949,
+                -706.33399125438,
+                -706.3340081306,
+                -706.33402442701,
+                -706.33403259483,
+                -706.33404506796,
+                -706.33408017569,
+                -706.33409091409,
+                -706.33409523612,
+                -706.33410036332,
+                -706.33410562273,
+                -706.33411000891,
+                -706.33412181146,
+                -706.33412917225,
+                -706.33413850029,
+                -706.3341428011,
+                -706.33415247251,
+                -706.33415945215,
+                -706.33416358771
+            ]
+        },
+        "is_error": false
+    },
+    "call_00_i8eW7XhBOUkWYdF3OlEGWCTs": {
+        "name": "get_high_symm_points_from_abacus_inputs_dir",
+        "args": {
+            "abacusjob_dir": "local:///tmp/abacusagent/20251224161948/2025-12-24-17:49:54.669407/1f78804f-7d31-4964-a399-796a1ca60272/outputs/new_abacus_inputs_dir/20251224175317.abacus_prepare_inputs_from_relax_results.a4934661.tgz"
+        },
+        "result": {
+            "point_coords": {
+                "GAMMA": [
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/reduce": [
+                                            {
+                                                "py/type": "numpy.dtype"
+                                            },
+                                            {
+                                                "py/tuple": [
+                                                    "f8",
+                                                    false,
+                                                    true
+                                                ]
+                                            },
+                                            {
+                                                "py/tuple": [
+                                                    3,
+                                                    "<",
+                                                    null,
+                                                    null,
+                                                    null,
+                                                    -1,
+                                                    -1,
+                                                    0
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "py/b64": "AAAAAAAAAAA="
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "AAAAAAAAAAA="
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "AAAAAAAAAAA="
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "Z": [
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "JWn55knhtbs="
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "AQAAAAAA4L8="
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "h5d3jH2oqDw="
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "Y": [
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "AAAAAAAA4L8="
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "ktn3zvIoh7w="
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "U213jH2oqDw="
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "Y_2": [
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "AAAAAAAA4D8="
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "ktn3zvIohzw="
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "U213jH2oqLw="
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "X": [
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "AAAAAAAAAAA="
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "AAAAAAAAAAA="
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "AAAAAAAA4D8="
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "V_2": [
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "AAAAAAAA4D8="
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "ktn3zvIohzw="
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "/P//////3z8="
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "U_2": [
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "JWn55knhtbs="
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "AQAAAAAA4L8="
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "/P//////378="
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "T_2": [
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "AAAAAAAA4D8="
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "AQAAAAAA4L8="
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "Ta4U00waNTo="
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "R_2": [
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "AAAAAAAA4D8="
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "AQAAAAAA4L8="
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "py/reduce": [
+                            {
+                                "py/function": "numpy.core.multiarray.scalar"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/id": 4
+                                    },
+                                    {
+                                        "py/b64": "AAAAAAAA4L8="
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "path": [
+                [
+                    "GAMMA",
+                    "X",
+                    "GAMMA",
+                    "Z"
+                ],
+                [
+                    "R_2",
+                    "GAMMA",
+                    "T_2"
+                ],
+                [
+                    "U_2",
+                    "GAMMA",
+                    "V_2"
+                ]
+            ],
+            "augmented_path": false,
+            "is_supercell": {
+                "py/reduce": [
+                    {
+                        "py/function": "numpy.core.multiarray.scalar"
+                    },
+                    {
+                        "py/tuple": [
+                            {
+                                "py/reduce": [
+                                    {
+                                        "py/type": "numpy.dtype"
+                                    },
+                                    {
+                                        "py/tuple": [
+                                            "b1",
+                                            false,
+                                            true
+                                        ]
+                                    },
+                                    {
+                                        "py/tuple": [
+                                            3,
+                                            "|",
+                                            null,
+                                            null,
+                                            null,
+                                            -1,
+                                            -1,
+                                            0
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "py/b64": "AA=="
+                            }
+                        ]
+                    }
+                ]
+            },
+            "has_inversion_symmetry": true,
+            "bravais_lattice": "aP",
+            "bravais_lattice_extended": "aP3",
+            "spacegroup_number": 2,
+            "spacegroup_international": "P-1"
+        },
+        "is_error": false
+    },
+    "call_00_p9rFZCpWC8G4ty2u9Jr2cTpb": {
+        "name": "abacus_cal_band",
+        "args": {
+            "abacus_inputs_dir": "local:///tmp/abacusagent/20251224161948/2025-12-24-17:49:54.669407/1f78804f-7d31-4964-a399-796a1ca60272/outputs/new_abacus_inputs_dir/20251224175317.abacus_prepare_inputs_from_relax_results.a4934661.tgz",
+            "mode": "pyatb",
+            "kpath": [
+                "G",
+                "M",
+                "K",
+                "G"
+            ],
+            "high_symm_points": {
+                "G": [
+                    0,
+                    0,
+                    0
+                ],
+                "M": [
+                    0.5,
+                    0,
+                    0
+                ],
+                "K": [
+                    0.3333,
+                    0.3333,
+                    0
+                ]
+            },
+            "energy_min": -15,
+            "energy_max": 15,
+            "insert_point_nums": 30
+        },
+        "result": {
+            "band_gap": 4.55588,
+            "band_calc_dir": "local:///tmp/abacusagent/20251224161948/2025-12-24-17:53:44.946320/77cbd496-300a-4a67-a5ea-f553b29e9fce/outputs/band_calc_dir/20251224175317.abacus_prepare_inputs_from_relax_results.a4934661.tgz",
+            "band_picture": "local:///tmp/abacusagent/20251224161948/2025-12-24-17:53:44.946320/77cbd496-300a-4a67-a5ea-f553b29e9fce/outputs/band_picture/band.png",
+            "message": "The band is calculated using PYATB after SCF calculation using ABACUS"
+        },
+        "is_error": false
+    },
+    "call_00_jNev5shlD7mT8S4Uw4wJ3GlJ": {
+        "name": "abacus_collect_data",
+        "args": {
+            "abacus_outputs_dir": "local:///tmp/abacusagent/20251224161948/2025-12-24-17:53:44.946320/77cbd496-300a-4a67-a5ea-f553b29e9fce/outputs/band_calc_dir/20251224175317.abacus_prepare_inputs_from_relax_results.a4934661.tgz",
+            "metrics": [
+                "normal_end",
+                "converge",
+                "energy",
+                "efermi",
+                "band_gap",
+                "nbands",
+                "nkstot",
+                "natom",
+                "nelec"
+            ]
+        },
+        "result": {
+            "collected_metrics": {
+                "normal_end": null,
+                "converge": null,
+                "energy": null,
+                "efermi": null,
+                "band_gap": null,
+                "nbands": null,
+                "nkstot": null,
+                "natom": null,
+                "nelec": null
+            }
+        },
+        "is_error": false
+    },
+    "call_00_aaREd56zXb4HZH9e9VTxc3FB": {
+        "name": "abacus_calculation_scf",
+        "args": {
+            "abacus_inputs_dir": "local:///tmp/abacusagent/20251224161948/2025-12-24-17:49:54.669407/1f78804f-7d31-4964-a399-796a1ca60272/outputs/new_abacus_inputs_dir/20251224175317.abacus_prepare_inputs_from_relax_results.a4934661.tgz"
+        },
+        "result": {
+            "scf_work_dir": "local:///tmp/abacusagent/20251224161948/2025-12-24-17:54:21.422948/0d5a5a92-560c-45b3-aaa1-689a2de1e44a/outputs/scf_work_dir/20251224175421.abacus_calculation_scf.79f01a88.tgz",
+            "normal_end": true,
+            "converge": true,
+            "energy": -706.3342490558463,
+            "total_time": 5.07125
+        },
+        "is_error": false
+    },
+    "call_00_wQvIGs3zpKK0s8uyh6BffJBs": {
+        "name": "abacus_collect_data",
+        "args": {
+            "abacus_outputs_dir": "local:///tmp/abacusagent/20251224161948/2025-12-24-17:54:21.422948/0d5a5a92-560c-45b3-aaa1-689a2de1e44a/outputs/scf_work_dir/20251224175421.abacus_calculation_scf.79f01a88.tgz",
+            "metrics": [
+                "normal_end",
+                "converge",
+                "energy",
+                "efermi",
+                "band_gap",
+                "nbands",
+                "nkstot",
+                "natom",
+                "nelec",
+                "cell"
+            ]
+        },
+        "result": {
+            "collected_metrics": {
+                "normal_end": true,
+                "converge": true,
+                "energy": -706.3342490558463,
+                "efermi": 5.1581609432,
+                "band_gap": 4.55588,
+                "nbands": 18,
+                "nkstot": 484,
+                "natom": 4,
+                "nelec": 16.0,
+                "cell": [
+                    [
+                        2.51259,
+                        0.000111869,
+                        0.0
+                    ],
+                    [
+                        -1.2562,
+                        2.17602,
+                        -0.0
+                    ],
+                    [
+                        0.0,
+                        -0.0,
+                        7.02197
+                    ]
+                ]
+            }
+        },
+        "is_error": false
+    }
+}
