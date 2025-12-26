@@ -171,13 +171,13 @@ python main.py --raw_dir "C:\MyData"
 
 AutoTutorial 采用五步流水线处理：
 
-Input: ABACUS Agent生成的问题集。
+**Input**：ABACUS Agent生成的问题集。
 1. **Step 0 - 数据处理**：使用python脚本从原始文档中提取结构化 QA JSON
 2. **Step 1 - 知识图谱构建**：对 QA JSON 元数据进行知识点提取
 3. **Step 2 - 大纲生成**：基于知识图谱生成逻辑严密的 Markdown 教程大纲
 4. **Step 3 - 内容撰写**：循环调用 LLM，结合 RAG 知识库与 QA JSON 元数据，逐章生成实战教程正文
 5. **Step 4 - 终稿组装**：自动生成全书标题、简介与目录，拼接所有章节
-Output: 一本结构完整、内容硬核的md教材文章。
+**Output**: 一本结构完整、内容硬核的md教材文章。
 
 ## ⚙️ 技术栈
 
