@@ -52,6 +52,7 @@ class AutoTutorialPipeline:
             with open(output_path, 'w', encoding='utf-8') as f:
                 json.dump(json_obj, f, indent=4)
             print(f"[Success] Step 1 complete. Saved to {output_path}")
+            print(f"[成功] Step 1 完成. 保存至 {output_path}")
         except json.JSONDecodeError:
             print("[Error] LLM did not return valid JSON. Saving raw text instead.")
             with open(output_path + ".txt", 'w', encoding='utf-8') as f:
@@ -84,6 +85,7 @@ class AutoTutorialPipeline:
             f.write(response)
             
         print(f"[Success] Step 2 complete. Saved to {output_path}")
+        print(f"[成功] Step 2 完成. 保存至 {output_path}")
         
         # 简单验证一下标记是否存在，防止 Step 3 报错
         if "<!-- CHAPTER_START -->" not in response:
@@ -147,12 +149,27 @@ class AutoTutorialPipeline:
             
             evidence_json = json.dumps(evidence_list, indent=2)
             
-            # 4. 组装 Prompt
-            final_prompt = prompt_tmpl.replace("{{FULL_BOOK_OUTLINE}}", outline_text) \
-                                      .replace("{{CHAPTER_TITLE}}", title) \
-                                      .replace("{{CHAPTER_OUTLINE}}", chunk) \
-                                      .replace("{{EVIDENCE_JSON}}", evidence_json)
+                # === 新增：提取并格式化物理步骤 ===
+                # 从当前案例中提取 steps (取第一个案例的步骤即可，通常同章案例流程相似)
+                # 或者把所有案例的步骤合并
+            step_desc = []
+            for rec in evidence_list:
+                # rec 是 get_record_by_id 返回的字典，里面有 'workflow'
+                wf = rec.get('workflow', {})
+                steps = wf.get('physics_steps', [])
+                if steps:
+                    step_desc.append(f"Case {rec['id']} Workflow: " + " -> ".join(steps))
             
+            workflow_context = "\n".join(step_desc) if step_desc else "Standard SCF -> Analysis"
+            # =================================
+
+            # 4. 组装 Prompt
+            # 新增替换 {{WORKFLOW_CONTEXT}}
+            final_prompt = prompt_tmpl.replace("{{FULL_BOOK_OUTLINE}}", outline_text) \
+                                        .replace("{{CHAPTER_TITLE}}", title) \
+                                        .replace("{{CHAPTER_OUTLINE}}", chunk) \
+                                        .replace("{{EVIDENCE_JSON}}", evidence_json) \
+                                        .replace("{{WORKFLOW_CONTEXT}}", workflow_context)
             # 5. 调用 LLM
             response = self.llm.chat(final_prompt)
             drafts.append(response)
@@ -162,6 +179,7 @@ class AutoTutorialPipeline:
                 f.write(response)
                 
         print(f"[Success] Generated {len(drafts)} chapters.")
+        print(f"[成功] Step 3 完成，一共 {len(drafts)} 个章节.")
         return drafts
 
     def run_step4(self):
@@ -239,6 +257,7 @@ class AutoTutorialPipeline:
             f.write(final_book_content)
             
         print(f"[Success] Book assembled! Saved to: {final_path}")
+        print(f"[成功] 文章完成! 保存至: {final_path}")
 
     def run_all(self):
         """
@@ -249,6 +268,7 @@ class AutoTutorialPipeline:
         # Step 0: 数据加载 (可选，如果确认数据已就绪可跳过，但建议加上以防万一)
         # 注意：需要在头部 import DataLoader
         print("\n[Step 0] Checking/Loading Raw Data...")
+        print("\n[Step 0] 加载数据中...")
         # 假设 raw_data 路径在 config 中配置了，或者硬编码
         # 这里为了演示，我们假设 data/processed/analysis_summary.json 已经由 data_loader.py 生成好了
         # 如果想集成得更紧密，可以在这里实例化 DataLoader 并调用 process()

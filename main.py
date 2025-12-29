@@ -22,6 +22,7 @@ def main():
     # 4. 执行 Step 0: 数据清洗 (Data Loader)
     if not args.skip_loader:
         print("\n[Main] Running Data Loader...")
+        print("\n[Main] 正在处理原始数据...")
         loader = DataLoader(args.raw_dir, default_processed_dir)
         loader.process()
     else:
@@ -29,6 +30,7 @@ def main():
 
     # 5. 执行 Pipeline (Steps 1-4)
     print("\n[Main] Initializing Pipeline...")
+    print("\n[Main] 初始化文章生成中...")
     pipe = AutoTutorialPipeline(project_root)
     pipe.run_all()
 

@@ -1,6 +1,7 @@
 import os
 import json
 import re
+from src.utils import clean_input_args
 
 class DataLoader:
     def __init__(self, raw_data_dir, output_dir):
@@ -16,7 +17,7 @@ class DataLoader:
             os.makedirs(self.output_dir)
 
     def _parse_txt_file(self, file_path):
-        """内部方法：解析 output.txt"""
+        """解析 output.txt """
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -40,48 +41,94 @@ class DataLoader:
                 
             return question, result
         except Exception as e:
-            # print(f"[Warn] Error parsing txt {file_path}: {e}")
             return None, None
 
     def _parse_json_file(self, file_path):
-        """内部方法：解析 function_call_info.json"""
-        workflow_steps = []
+        """
+        [重构版] 内部方法：解析 function_call_info.json
+        将 Agent 的工具流转换为【物理文件视角】(De-Agentify)
+        同时提取【物理执行步骤】(Physics Steps)
+        """
+        simulated_files = {
+            "STRU": {},
+            "INPUT": {},
+            "KPT": {},
+            "physics_steps": []  # 提前初始化，保证 key 永远存在
+        }
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-                
+            
+            # 如果文件为空或不是字典，直接返回空结构
+            if not data:
+                return simulated_files
+
             sorted_keys = sorted(data.keys())
             
             for call_id in sorted_keys:
                 info = data[call_id]
                 tool_name = info.get('name')
                 args = info.get('args', {})
+                result = info.get('result', {})
+
+                # === 1. 物理步骤翻译 (Human-Readable Steps) ===
+                if tool_name in ['generate_structure', 'generate_bulk_structure']:
+                    simulated_files["physics_steps"].append("Step: Build Initial Structure (建模)")
+                elif tool_name == 'abacus_do_relax':
+                    simulated_files["physics_steps"].append("Step: Geometry Optimization (Relaxation)")
+                elif tool_name == 'abacus_cal_band':
+                    simulated_files["physics_steps"].append("Step: Band Structure Calculation (Non-SCF)")
+                elif tool_name == 'abacus_run':
+                    # 细分 scf 还是 relax
+                    calc_type = args.get('calculation', 'scf')
+                    if 'relax' in str(calc_type):
+                        simulated_files["physics_steps"].append("Step: Geometry Optimization (Relaxation)")
+                    else:
+                        simulated_files["physics_steps"].append("Step: Self-Consistent Field (SCF)")
                 
-                step_info = {
-                    "step_id": call_id,
-                    "tool": tool_name,
-                    "input_args": args,
-                    "method_details": {}
-                }
-                
-                # 提取计算参数
-                if tool_name == 'abacus_prepare' and 'result' in info:
-                    inp = info['result'].get('input_content', {})
-                    if inp:
-                        step_info["method_details"] = {
-                            'calculation_type': inp.get('calculation'),
-                            'basis_type': inp.get('basis_type'),
-                            'ecutwfc': inp.get('ecutwfc'),
-                            'ks_solver': inp.get('ks_solver'),
-                            'smearing_method': inp.get('smearing_method'),
-                            'nspin': inp.get('nspin')
-                        }
-                
-                workflow_steps.append(step_info)
-            return workflow_steps
+                # === 2. 处理结构生成 (Mapping to STRU) ===
+                if tool_name in ['generate_bulk_structure', 'generate_structure']:
+                    stru_params = {
+                        "element": args.get("element"),
+                        "lattice_constant": args.get("a"),
+                        "crystal_type": args.get("crystal_structure", "custom"),
+                        "wyckoff": args.get("wyckoff_positions")
+                    }
+                    stru_params = {k: v for k, v in stru_params.items() if v is not None}
+                    simulated_files["STRU"].update(stru_params)
+
+                # === 3. 处理输入参数 (Mapping to INPUT/KPT) ===
+                elif tool_name == 'abacus_prepare':
+                    source_data = {}
+                    if isinstance(result, dict) and result.get('input_content'):
+                        source_data = result.get('input_content')
+                    else:
+                        source_data = args
+                    
+                    clean_data = clean_input_args(source_data, strict_defaults=True)
+                    for k, v in clean_data.items():
+                        if k in ['kspacing', 'kpath', 'k_points', 'gamma_only']:
+                            simulated_files["KPT"][k] = v
+                        else:
+                            simulated_files["INPUT"][k] = v
+
+                # === 4. 处理运行时改动 ===
+                elif tool_name in ['abacus_do_relax', 'abacus_run', 'abacus_cal_band']:
+                    clean_exec_args = clean_input_args(args, strict_defaults=True)
+                    for k, v in clean_exec_args.items():
+                        if k in ['kspacing', 'kpath']:
+                            simulated_files["KPT"][k] = v
+                        else:
+                            simulated_files["INPUT"][k] = v
+            
+            return simulated_files
+
         except Exception as e:
             print(f"[Warn] Error parsing json {file_path}: {e}")
-            return []
+            # 出错时返回带空列表的结构，防止后续 KeyError
+            return {"STRU": {}, "INPUT": {}, "KPT": {}, "physics_steps": []}
+
 
     def process(self):
         """
@@ -96,7 +143,6 @@ class DataLoader:
         print(f"[Info] Scanning {self.raw_data_dir} recursively...")
 
         count = 0
-        # === 核心修改：使用 os.walk 递归遍历 ===
         for root, dirs, files in os.walk(self.raw_data_dir):
             for filename in files:
                 # 找到目标 JSON 文件
@@ -111,21 +157,22 @@ class DataLoader:
                     if os.path.exists(txt_path):
                         # 解析成对文件
                         question, result_summary = self._parse_txt_file(txt_path)
-                        workflow = self._parse_json_file(json_path)
+                        # [改动] 这里返回的是 File View (STRU/INPUT/KPT)
+                        file_view = self._parse_json_file(json_path)
                         
                         record = {
                             "problem_id": base_name,
                             "file_path": root,
                             "extracted_data": {
                                 "question": question,
-                                "workflow_trace": workflow,
+                                "workflow_trace": file_view, # 字段名保持 workflow_trace 以兼容旧代码，但内容已变
                                 "final_result_summary": result_summary
                             }
                         }
                         
                         final_report["records"].append(record)
                         count += 1
-                        print(f"  [Parse] Found: {base_name}")
+                        print(f"  [Parse] Found & Cleaned: {base_name}")
                     else:
                         print(f"  [Skip] Missing txt for {base_name} in {root}")
 
@@ -137,15 +184,13 @@ class DataLoader:
             with open(output_path, 'w', encoding='utf-8') as f:
                 json.dump(final_report, f, ensure_ascii=False, indent=4)
             print(f"\n[Success] Processed {count} records.\n[Output] Saved to: {output_path}")
+            print(f"\n[成功] 已处理 {count} 条记录。\n[输出] 已保存到：{output_path}。")
         except Exception as e:
             print(f"[Error] Failed to save summary json: {e}")
             
         return final_report
 
 if __name__ == "__main__":
-    # 这里的路径仅供测试，请根据实际情况调整
-    RAW_DIR = r"C:\MyCode\AutoTutorial\data\raw"
-    PROCESSED_DIR = r"C:\MyCode\AutoTutorial\data\processed"
-    
-    loader = DataLoader(RAW_DIR, PROCESSED_DIR)
-    loader.process()
+    # 测试代码
+    # 注意：这里如果单独运行，需要确保 import 路径正确。建议通过 main.py 运行。
+    pass
